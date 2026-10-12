@@ -134,3 +134,27 @@
     @apply font-sans;
     }
 }
+
+@keyframes score-burst {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.3);
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--burst-x), var(--burst-y)) scale(1);
+  }
+}
+
+.score-burst {
+  animation: score-burst 900ms ease-out forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .score-burst {
+    animation: none;
+  }
+}
