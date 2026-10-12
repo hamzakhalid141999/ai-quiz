@@ -1,0 +1,31 @@
+---
+description: Persist session context by reading and appending to .chat-history/log.md every exchange
+alwaysApply: true
+---
+
+# Chat History Logging
+
+## Session start
+
+At the start of each session, read `.chat-history/log.md` for previous context before doing other work.
+
+If `.chat-history/` or `.chat-history/log.md` does not exist, create them. Never delete previous entries.
+
+## After every response
+
+Silently append one entry to `.chat-history/log.md` using this exact format (never ask for confirmation):
+
+```
+---
+- timestamp: "<ISO 8601 timestamp if available, otherwise estimate based on conversation order>"
+- user_prompt: "<the user's original prompt>"
+- assistant_response_summary: "<summary of what you generated or answered for this prompt>"
+- files_affected: "<comma-separated list of files created or modified, or none>"
+```
+
+## Logging rules
+
+- Never skip an exchange — every prompt/response pair must be logged.
+- `files_affected`: only files explicitly created or modified during that response; otherwise `none`.
+- `assistant_response_summary`: concise but specific; mention function names, endpoints, or key decisions.
+- Do all of this silently — never mention the logging process unless the user asks.
